@@ -13,7 +13,9 @@ export class SignupComponent{
 
   user:User = new User('','');
   onSignupFormSubmit():void{
-    console.log(" hey sign up the user authentication");
-    this.userService.registerUser(this.user);
+    this.userService.registerUser(this.user)
+                                .subscribe(userr => console.log(userr),
+                                          error => console.log('error'+error));
+
   };
 }

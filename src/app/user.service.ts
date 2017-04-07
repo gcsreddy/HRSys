@@ -1,7 +1,9 @@
 import { User } from './user';
 import { Injectable } from  '@angular/core';
-import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 
 
@@ -11,6 +13,8 @@ export class UserService{
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*'
   });
+
+  private options = new RequestOptions({headers: this.headers});
   private hrsysbackend = 'http://localhost:3300';
   constructor(private http:Http){}
 
@@ -20,19 +24,18 @@ export class UserService{
     return Promise.reject(error.message || error);
   }
 
-  registerUser(user):User{
+  registerUser(user:User):Observable<User>{
     console.log("in service");
     console.log(user);
     const signupUrl = this.hrsysbackend + "/register";
     let jsonPromiseObj =  this.http.post(
-      signupUrl,JSON.stringify(user), {headers: this.headers}
-    ).toPromise()
-    .then(response => response.json().data)
-    .catch(this.handleError);
-    let success = jsonPromiseObj.then(obj => obj.success as string);
-    let msg = jsonPromiseObj.then(obj => obj.message as string);
-    console.log('success ='+success);
-    console.log('message ='+ msg);
-    return user;
+      signupUrl,JSON.stringify(user), this.options
+    ).map(function(res){
+      let body = res.json();
+      return body || {};
+    }).catch(function(err:Response | any){
+      return Observable.throw("error registering user");
+    });
+    return jsonPromiseObj;
   }
 }
