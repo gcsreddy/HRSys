@@ -7,6 +7,6 @@ import { NgModule } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: String = 'Welcome to Human Resource System';
+  title: String = 'Welcome to HR System';
 
 }
