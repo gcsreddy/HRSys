@@ -40,4 +40,19 @@ export class UserService{
     });
     return jsonPromiseObj;
   }
+
+  loginUser(user:User):Observable<AuthReturn>{
+    console.log("in service");
+    console.log(user);
+    const signupUrl = this.hrsysbackend + "/login";
+    let jsonPromiseObj =  this.http.post(
+      signupUrl,JSON.stringify(user), this.options
+    ).map(function(res){
+      let body = res.json();
+      return body || {};
+    }).catch(function(err:Response | any){
+      return Observable.throw("error registering user");
+    });
+    return jsonPromiseObj;
+  }
 }

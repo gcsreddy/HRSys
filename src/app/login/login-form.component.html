@@ -10,6 +10,8 @@
       <div [hidden]="usremail.valid || usremail.pristine"
         class="alert alert-danger">
         email is required</div>
+      <div [hidden]="onLoginSuccess"
+        class="alert alert-danger">{{onLoginMessage}}</div>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
