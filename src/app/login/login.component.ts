@@ -25,6 +25,7 @@ export class LoginComponent{
           resObj => {
             console.log(resObj);
             if(resObj.success === 'true'){
+
               //redirectTo to dashboard
               this.router.navigate(['/dashboard']);
             }else if(resObj.success === 'false'){

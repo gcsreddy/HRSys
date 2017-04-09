@@ -11,11 +11,32 @@ import { UserService } from  '../user/user.service';
 })
 export class DashboardComponent implements OnInit{
 
+  //TODO
+  //Angular2: How to load data before rendering the component?
+  //http://stackoverflow.com/questions/35655361/angular2-how-to-load-data-before-rendering-the-component
+
   constructor(
     private router:Router,
     private userService:UserService //Dependency injection
   ){
 
+  }
+
+  onLogOut(){
+    console.log('logout called');
+    //is user authenticated?
+    this.userService.logoutuser()
+      .subscribe(
+        resObj => {
+          console.log(resObj);
+          this.router.navigate(['/login']);
+        },
+        error => {
+          console.log('error'+error);
+          //redirectTo to login
+          this.router.navigate(['/login']);
+        }
+      );
   }
 
   authenticateUser(){
