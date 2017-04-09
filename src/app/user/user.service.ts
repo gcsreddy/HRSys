@@ -13,7 +13,8 @@ import 'rxjs/add/operator/map';
 export class UserService{
   private headers = new Headers({
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin':'*'
+    'Access-Control-Allow-Origin':'*',
+    'Authorization':localStorage.getItem('userJwt')
   });
 
   private options = new RequestOptions({headers: this.headers});
@@ -45,8 +46,29 @@ export class UserService{
     return jsonPromiseObj;
   }
 
+  authenticate():Observable<any>{
+    const authenticateUrl = this.hrsysbackend + "/authenticate";
+    let jsonPromiseObj =  this.http.post(
+      authenticateUrl,{}, this.options
+    ).catch(function(err:Response | any){
+
+      //TODO: some crappy code down here. learn more and clean up.
+
+      if(err.status===401){
+        console.log('401- not Authorized');
+        return Observable.create((o) => {
+          o.next({
+              success:'false',message:'not authorized'
+          });
+          o.complete();
+        });
+      }
+      return Observable.throw("error registering user");
+    });
+    return jsonPromiseObj;
+  }
+
   loginUser(user:User):Observable<AuthReturn>{
-    console.log("in service");
     console.log(user);
     const signupUrl = this.hrsysbackend + "/login";
     let jsonPromiseObj =  this.http.post(

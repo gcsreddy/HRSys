@@ -14,9 +14,24 @@ export class DashboardComponent{
   constructor(
     private router:Router,
     private userService:UserService //Dependency injection
-  ){}
-  user:User = new User('','');
-  onLoginSuccess:boolean= true;
-  onLoginMessage:string= '';
+  ){
+    //is user authenticated?
+    this.userService.authenticate()
+      .subscribe(
+        resObj => {
+          console.log(resObj);
+          if(resObj.success === 'true'){
+            //redirectTo to dashboard
+            this.router.navigate(['/dashboard']);
+          }else if(resObj.success === 'false'){
+            //redirectTo to login
+            this.router.navigate(['/login']);
+          }
+        },
+        error => {
+          console.log('error'+error);
 
+        }
+      );
+  }
 }
