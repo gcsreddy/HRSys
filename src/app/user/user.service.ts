@@ -63,7 +63,7 @@ export class UserService{
           o.complete();
         });
       }
-      return Observable.throw("error registering user");
+      return Observable.throw("error authenticating user");
     });
     return jsonPromiseObj;
   }

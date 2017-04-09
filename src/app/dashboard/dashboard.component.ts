@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { User } from '../user/user';
@@ -9,12 +9,16 @@ import { UserService } from  '../user/user.service';
   styleUrls:['./dashboard.component.css'],
   providers:[UserService]
 })
-export class DashboardComponent{
+export class DashboardComponent implements OnInit{
 
   constructor(
     private router:Router,
     private userService:UserService //Dependency injection
   ){
+
+  }
+
+  authenticateUser(){
     //is user authenticated?
     this.userService.authenticate()
       .subscribe(
@@ -30,8 +34,12 @@ export class DashboardComponent{
         },
         error => {
           console.log('error'+error);
-
+          //redirectTo to login
+          this.router.navigate(['/login']);
         }
       );
+  }
+  ngOnInit():void{
+    this.authenticateUser();
   }
 }
