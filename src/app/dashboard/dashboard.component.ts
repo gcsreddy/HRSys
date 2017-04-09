@@ -11,4 +11,12 @@ import { UserService } from  '../user/user.service';
 })
 export class DashboardComponent{
 
+  constructor(
+    private router:Router,
+    private userService:UserService //Dependency injection
+  ){}
+  user:User = new User('','');
+  onLoginSuccess:boolean= true;
+  onLoginMessage:string= '';
+
 }

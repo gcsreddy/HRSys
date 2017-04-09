@@ -33,6 +33,10 @@ export class UserService{
     let jsonPromiseObj =  this.http.post(
       signupUrl,JSON.stringify(user), this.options
     ).map(function(res){
+      let userJwt = res.headers.get('Authorization');
+      console.log(res);
+      console.log(userJwt);
+      localStorage.setItem('uerJwt',userJwt);
       let body = res.json();
       return body || {};
     }).catch(function(err:Response | any){
