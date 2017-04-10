@@ -19,7 +19,18 @@ export class DashboardComponent implements OnInit{
     private router:Router,
     private userService:UserService //Dependency injection
   ){
+    this.showTimesheet= true;
+  }
+  showTimesheet:boolean;
 
+  onToggleShowTimesheet():boolean{
+    console.log(this.showTimesheet);
+    if(this.showTimesheet === true){
+      this.showTimesheet = false;
+    }else{
+      this.showTimesheet = true;
+    }
+    return this.showTimesheet;
   }
 
   onLogOut(){

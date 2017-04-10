@@ -12,7 +12,7 @@
         <a class="nav-link" href="">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="">Timesheet</a>
+        <a class="nav-link" href="" (click)="onToggleShowTimesheet()">Timesheet</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="">Department</a>
@@ -28,6 +28,5 @@
 
     </ul>
   </div>
-
-
 </nav>
+<timesheet *ngIf="showTimesheet"></timesheet>
